@@ -1,0 +1,151 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+
+void quicksort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quicksort(arr, low, pi - 1);
+        quicksort(arr, pi + 1, high);
+    }
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int Mayor(int arr[], int size) {
+    int mayor = arr[0];
+    for (int i = 1; i < size; i++) {
+        if (arr[i] > mayor) {
+            mayor = arr[i];
+        }
+    }
+    return mayor;
+}
+
+int Minimo(int arr[], int size) {
+    int minimo = arr[0];
+    for (int i = 1; i < size; i++) {
+        if (arr[i] < minimo) {
+            minimo = arr[i];
+        }
+    }
+    return minimo;
+}
+
+float Media(int arr[], int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        sum += arr[i];
+    }
+    return (float)sum / size;
+}
+
+float Mediana(int arr[], int size) {
+    if (size % 2 == 0) {
+        return (float)(arr[size / 2] + arr[size / 2 - 1]) / 2;
+    } else {
+        return (float)arr[size / 2];
+    }
+}
+
+int Moda(int arr[], int size) {
+    int maxCount = 0;
+    int mode = arr[0];
+    for (int i = 0; i < size; i++) {
+        int count = 0;
+        for (int j = 0; j < size; j++) {
+            if (arr[j] == arr[i]) {
+                count++;
+            }
+        }
+        if (count > maxCount) {
+            maxCount = count;
+            mode = arr[i];
+        }
+    }
+    return mode;
+}
+
+void Histograma(int arr[], int size) {
+    int maxFrequency = 0;
+    for (int i = 0; i < size; i++) {
+        if (arr[i] > maxFrequency) {
+            maxFrequency = arr[i];
+        }
+    }
+
+    float normalizationFactor = (float)maxFrequency / 40;
+
+    for (int i = 0; i < size; i++) {
+        int normalizedFrequency = (int)(arr[i] / normalizationFactor);
+        printf("%2d: ", arr[i]);
+        for (int j = 0; j < normalizedFrequency; j++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+}
+
+
+int main() {
+    srand(time(NULL));
+
+    int N;
+    printf("Numero de elementos a ordenar:\n");
+    scanf("%d", &N);
+
+    int arr[N];
+    for (int i = 0; i < N; i++) {
+        arr[i] = rand() % 30 + 1;
+    }
+
+    printf("Lista sin ordenar:\n");
+    printArray(arr, N);
+
+    quicksort(arr, 0, N - 1);
+
+    printf("Lista ordenada:\n");
+    printArray(arr, N);
+
+    int minimo = Minimo(arr, N);
+    int mayor = Mayor(arr, N);
+    printf("Elemento menor: %d\n", minimo);
+    printf("Elemento mayor: %d\n", mayor);
+
+    float mean = Media(arr, N);
+    float median = Mediana(arr, N);
+    int mode = Moda(arr, N);
+    printf("Media: %.2f\n", mean);
+    printf("Mediana: %.2f\n", median);
+    printf("Moda: %d\n", mode);
+    
+    printf("Histograma:\n");
+    Histograma(arr, N);
+
+    return 0;
+}
