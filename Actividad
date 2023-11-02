@@ -124,27 +124,27 @@ int main() {
         arr[i] = rand() % 30 + 1;
     }
 
-    printf("Lista sin ordenar:\n");
+    printf("\nLista sin ordenar:\n");
     printArray(arr, N);
 
     quicksort(arr, 0, N - 1);
 
-    printf("Lista ordenada:\n");
+    printf("\nLista ordenada:\n");
     printArray(arr, N);
 
     int minimo = Minimo(arr, N);
     int mayor = Mayor(arr, N);
-    printf("Elemento menor: %d\n", minimo);
-    printf("Elemento mayor: %d\n", mayor);
+    printf("\nElemento menor: %d\n", minimo);
+    printf("\nElemento mayor: %d\n", mayor);
 
     float mean = Media(arr, N);
     float median = Mediana(arr, N);
     int mode = Moda(arr, N);
-    printf("Media: %.2f\n", mean);
-    printf("Mediana: %.2f\n", median);
-    printf("Moda: %d\n", mode);
+    printf("\nMedia: %.2f\n", mean);
+    printf("\nMediana: %.2f\n", median);
+    printf("\nModa: %d\n", mode);
     
-    printf("Histograma:\n");
+    printf("\nHistograma:\n");
     Histograma(arr, N);
 
     return 0;
